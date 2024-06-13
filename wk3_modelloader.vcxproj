@@ -167,7 +167,6 @@
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="RectangleComponent.cpp" />
     <ClCompile Include="RoomComponent.cpp" />
-    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stb_truetype.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -183,7 +182,6 @@
     <ClInclude Include="ModelComponent.h" />
     <ClInclude Include="RectangleComponent.h" />
     <ClInclude Include="RoomComponent.h" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ObjModel.h" />
     <ClInclude Include="stb_truetype.h" />

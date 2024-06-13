@@ -27,11 +27,8 @@ Texture* textureCeiling;
 
 std::shared_ptr<GameManager> gameManager;
 
-std::shared_ptr<GameObject> enemy1;
-
 
 GLFWwindow* window;
-ObjModel* model;
 FpsCam* camera;
 
 int frontWallsWidth, sideWallsWidth = 10;
@@ -86,12 +83,16 @@ void init()
             glfwSetWindowShouldClose(window, true);
     });
 
-
-    model = new ObjModel("models/car/honda_jazz.obj");
     camera = new FpsCam(window);
     textureFloor = new Texture("assets/floorTexture.png", 128, 128, NULL);
     textureWall = new Texture("assets/wallTexture.png", 128, 128, NULL);
     textureCeiling = new Texture("assets/ceilingTexture.png", 128, 128, NULL);
+
+    auto tafel = std::make_shared<GameObject>();
+    tafel->position = glm::vec3(6, y, -12);
+    tafel->addComponent(std::make_shared<ModelComponent>("assets/models/pikniekTafel/picnicTafel.obj"));
+    tafel->scale = glm::vec3(2, 2, 2);
+    gameObjects.push_back(tafel);
 
    // texture->bind();
 
@@ -110,12 +111,11 @@ void update()
     lastTime = currentTime;
     gameManager->update(deltaTime);
 
-
-
     glEnable(GL_DEPTH_TEST);
 
     for (auto& go : gameObjects)
-        go->update(deltaTime);
+		go->update(deltaTime);
+  
 }
 
 void draw()
@@ -136,25 +136,25 @@ void draw()
 
     glEnable(GL_DEPTH_TEST);
 
-    auto wall1 = std::make_shared<GameObject>(); // left wall
+    auto wall1 = std::make_shared<GameObject>(); 
     wall1->addComponent(std::make_shared<RectangleComponent>(0, 0, 0, 1, false, 20, height, textureWall));
     wall1->position = glm::vec3(x, y, z);
     wall1->rotation = glm::vec3(0, 0, 0);
     gameObjects.push_back(wall1);
 
-    auto wall2 = std::make_shared<GameObject>(); // right wall
+    auto wall2 = std::make_shared<GameObject>(); 
     wall2->addComponent(std::make_shared<RectangleComponent>(0, 0, 0, 1, false, 20, height, textureWall));
     wall2->position = glm::vec3(20, y, 0);
     wall2->rotation = glm::vec3(0, 0, 0);
     gameObjects.push_back(wall2);
 
-    auto wall3 = std::make_shared<GameObject>(); // back wall
+    auto wall3 = std::make_shared<GameObject>(); 
     wall3->addComponent(std::make_shared<RectangleComponent>(0, 0, 0, 0, false, 20, height, textureWall));
     wall3->position = glm::vec3(x, y, 0);
     wall3->rotation = glm::vec3(0, 0, 0);
     gameObjects.push_back(wall3);
 
-    auto wall4 = std::make_shared<GameObject>(); // back wall
+    auto wall4 = std::make_shared<GameObject>(); 
     wall4->addComponent(std::make_shared<RectangleComponent>(0, 0, 0, 0, false, 20, height, textureWall));
     wall4->position = glm::vec3(x, y, -20);
     wall4->rotation = glm::vec3(0, 0, 0);
@@ -172,7 +172,6 @@ void draw()
     gameObjects.push_back(ceiling1);
 
     glPointSize(10.0f);
-    //model->draw();
 
     for (auto& go : gameObjects)
         go->draw();
