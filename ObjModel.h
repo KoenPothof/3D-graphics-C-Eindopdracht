@@ -19,7 +19,7 @@ private:
 	public:
 		int position;
 		int normal;
-		int texcoord; 
+		int texcoord;
 	};
 
 	class Face
@@ -43,6 +43,8 @@ private:
 		std::list<Face> faces;
 	};
 
+	float size;
+	glm::vec3 position;
 
 	std::vector<glm::vec3>	vertices;
 	std::vector<glm::vec3>	normals;
@@ -50,11 +52,10 @@ private:
 	std::vector<ObjGroup*> groups;
 	std::vector<MaterialInfo*> materials;
 
-	void loadMaterialFile(const std::string &fileName, const std::string &dirName);
+	void loadMaterialFile(const std::string& fileName, const std::string& dirName);
 public:
-	ObjModel(const std::string &filename);
+	ObjModel(const std::string& filename);
 	~ObjModel(void);
 
 	void draw();
 };
-
