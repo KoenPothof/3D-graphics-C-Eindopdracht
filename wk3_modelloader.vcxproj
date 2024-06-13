@@ -105,7 +105,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS_CRT_SECURE_NO_WARNINGS_DEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\glew-2.1.0\include;$(SolutionDir)lib\glfw-3.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -143,7 +143,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS_CRT_SECURE_NO_WARNINGSNDEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\glew-2.1.0\include;$(SolutionDir)lib\glfw-3.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -157,21 +157,37 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DoorComponent.cpp" />
+    <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="FpsCam.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelComponent.cpp" />
     <ClCompile Include="ObjModel.cpp" />
+    <ClCompile Include="RectangleComponent.cpp" />
+    <ClCompile Include="RoomComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="stb_truetype.cpp" />
+    <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="tigl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h" />
+    <ClInclude Include="DoorComponent.h" />
+    <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="FpsCam.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="ModelComponent.h" />
+    <ClInclude Include="RectangleComponent.h" />
+    <ClInclude Include="RoomComponent.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ObjModel.h" />
+    <ClInclude Include="stb_truetype.h" />
+    <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="tigl.h" />
   </ItemGroup>
