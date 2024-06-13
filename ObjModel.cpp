@@ -235,7 +235,7 @@ void ObjModel::loadMaterialFile( const std::string &fileName, const std::string 
 			if (tex.find("\\"))
 				tex = tex.substr(tex.rfind("\\") + 1);
 			//TODO
-			currentMaterial->texture = new Texture(dirName + "/" + tex);
+			currentMaterial->texture = new Texture(dirName + "/" + tex, 100, 100, 100);
 		} 
 		else if (params[0] == "kd")
 		{//TODO, diffuse color

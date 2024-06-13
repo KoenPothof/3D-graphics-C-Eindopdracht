@@ -1,8 +1,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/gtc/matrix_transform.hpp>
+#include "FpsCam.h"
 #include "tigl.h"
 #include "ObjModel.h"
-#include <glm/gtc/matrix_transform.hpp>
 using tigl::Vertex;
 
 #pragma comment(lib, "glfw3.lib")
@@ -11,6 +12,7 @@ using tigl::Vertex;
 
 GLFWwindow* window;
 ObjModel* model;
+FpsCam* camera;
 
 void init();
 void update();
@@ -20,7 +22,7 @@ int main(void)
 {
     if (!glfwInit())
         throw "Could not initialize glwf";
-    window = glfwCreateWindow(1400, 800, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1400, 800, "Eindopdracht-3DC", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -57,13 +59,13 @@ void init()
 
 
     model = new ObjModel("models/car/honda_jazz.obj");
+    camera = new FpsCam(window);
 }
 
-float rotation = 0;
 
 void update()
 {
-    rotation += 0.01f;
+    camera->update(window);
 }
 
 void draw()
@@ -76,8 +78,8 @@ void draw()
     glm::mat4 projection = glm::perspective(glm::radians(75.0f), viewport[2] / (float)viewport[3], 0.01f, 500.0f);
 
     tigl::shader->setProjectionMatrix(projection);
-    tigl::shader->setViewMatrix(glm::lookAt(glm::vec3(0,50,100), glm::vec3(0,0,0), glm::vec3(0,1,0)));
-    tigl::shader->setModelMatrix(glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0,1,0)));
+    tigl::shader->setViewMatrix(camera->getMatrix());
+    tigl::shader->setModelMatrix(glm::mat4(1.0f));
 
     tigl::shader->enableColor(true);
 
@@ -86,4 +88,19 @@ void draw()
 
     glPointSize(10.0f);
     model->draw();
+    tigl::begin(GL_TRIANGLES);
+    tigl::addVertex(Vertex::PC(glm::vec3(-2, -1, -4), glm::vec4(1, 0, 0, 1)));
+    tigl::addVertex(Vertex::PC(glm::vec3(2, -1, -4), glm::vec4(0, 1, 0, 1)));
+    tigl::addVertex(Vertex::PC(glm::vec3(0, 1, -4), glm::vec4(0, 0, 1, 1)));
+
+
+    tigl::addVertex(Vertex::PC(glm::vec3(-10, -1, -10), glm::vec4(1, 1, 1, 1)));
+    tigl::addVertex(Vertex::PC(glm::vec3(-10, -1, 10), glm::vec4(1, 1, 1, 1)));
+    tigl::addVertex(Vertex::PC(glm::vec3(10, -1, 10), glm::vec4(1, 1, 1, 1)));
+
+    tigl::addVertex(Vertex::PC(glm::vec3(-10, -1, -10), glm::vec4(1, 1, 1, 1)));
+    tigl::addVertex(Vertex::PC(glm::vec3(10, -1, -10), glm::vec4(1, 1, 1, 1)));
+    tigl::addVertex(Vertex::PC(glm::vec3(10, -1, 10), glm::vec4(1, 1, 1, 1)));
+
+    tigl::end();
 }
