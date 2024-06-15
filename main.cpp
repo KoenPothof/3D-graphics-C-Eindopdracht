@@ -12,6 +12,7 @@
 #include "ModelComponent.h"
 #include "RoomComponent.h"
 #include "DoorComponent.h"
+#include "MovingObjectComponent.h"
 #include "GameObject.h"
 using tigl::Vertex;
 
@@ -37,6 +38,7 @@ int height = 5;
 int x = 0;
 int y = -2;
 int z = 0;
+float deltaTime = 0.0f; 
 
 void init();
 void update();
@@ -89,10 +91,23 @@ void init()
     textureCeiling = new Texture("assets/ceilingTexture.png", 128, 128, NULL);
 
     auto tafel = std::make_shared<GameObject>();
-    tafel->position = glm::vec3(6, y, -12);
+    tafel->position = glm::vec3(3, y, -15);
     tafel->addComponent(std::make_shared<ModelComponent>("assets/models/pikniekTafel/picnicTafel.obj"));
-    tafel->scale = glm::vec3(2, 2, 2);
+    tafel->scale = glm::vec3(1.5, 1.5, 1.5);
     gameObjects.push_back(tafel);
+
+    /*auto car = std::make_shared<GameObject>();
+    car->position = glm::vec3(6, y, -6);
+    car->addComponent(std::make_shared<ModelComponent>("models/car/honda_jazz.obj"));
+    car->scale = glm::vec3(0.01, 0.01, 0.01);
+    gameObjects.push_back(car);*/
+
+    auto car = std::make_shared<GameObject>();
+    car->addComponent(std::make_shared<ModelComponent>("models/car/honda_jazz.obj"));
+    car->addComponent(std::make_shared<MovingObjectComponent>());
+    car->getComponent<MovingObjectComponent>()->init();
+    car->scale = glm::vec3(0.01f, 0.01f, 0.01f);
+    gameObjects.push_back(car);
 
    // texture->bind();
 
@@ -107,7 +122,7 @@ void update()
     camera->update(window);
     double currentTime = glfwGetTime();
     static double lastTime = currentTime;
-    float deltaTime = float(currentTime - lastTime);
+    deltaTime = float(currentTime - lastTime);
     lastTime = currentTime;
     gameManager->update(deltaTime);
 
