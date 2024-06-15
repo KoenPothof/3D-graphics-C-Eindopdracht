@@ -8,6 +8,9 @@ public:
 
     void init();
     void update(float deltaTime);
+    void movementToggle();
+
+    bool rennn = true;
 
 private:
     glm::vec3 position;

@@ -18,6 +18,7 @@ void MovingObjectComponent::init()
 
 void MovingObjectComponent::update(float deltaTime)
 {
+	if (rennn){
 	if (movingForward)
 	{
 		gameObject->position.x += runningSpeed * deltaTime;
@@ -37,3 +38,10 @@ void MovingObjectComponent::update(float deltaTime)
 		}
 	}
 }
+}
+
+void MovingObjectComponent::movementToggle()
+{
+	rennn = !rennn;
+}
+

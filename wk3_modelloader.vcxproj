@@ -157,7 +157,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="DoorComponent.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="FpsCam.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -167,7 +166,6 @@
     <ClCompile Include="MovingObjectComponent.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="RectangleComponent.cpp" />
-    <ClCompile Include="RoomComponent.cpp" />
     <ClCompile Include="stb_truetype.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -175,7 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h" />
-    <ClInclude Include="DoorComponent.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="FpsCam.h" />
     <ClInclude Include="GameManager.h" />
@@ -183,7 +180,6 @@
     <ClInclude Include="ModelComponent.h" />
     <ClInclude Include="MovingObjectComponent.h" />
     <ClInclude Include="RectangleComponent.h" />
-    <ClInclude Include="RoomComponent.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ObjModel.h" />
     <ClInclude Include="stb_truetype.h" />

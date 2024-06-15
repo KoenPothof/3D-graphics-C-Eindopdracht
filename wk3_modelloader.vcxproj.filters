@@ -54,12 +54,6 @@
     <ClCompile Include="RectangleComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RoomComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DoorComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MovingObjectComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,12 +96,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RectangleComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DoorComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MovingObjectComponent.h">
