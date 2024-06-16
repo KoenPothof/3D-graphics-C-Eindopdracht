@@ -1,10 +1,9 @@
 
 #include "GameObject.h"
 #include "DrawComponent.h"
+#include "TextComponent.h"
 #include "tigl.h"
 #include <glm/gtc/matrix_transform.hpp>
-#include "GameManager.h"
-//#include "BoundingBoxComponent.h"
 
 GameObject::GameObject()
 {

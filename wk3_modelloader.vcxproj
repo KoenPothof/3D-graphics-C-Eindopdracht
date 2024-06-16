@@ -157,9 +157,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DoubleTextComponent.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="FpsCam.cpp" />
-    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelComponent.cpp" />
@@ -173,9 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h" />
+    <ClInclude Include="DoubleTextComponent.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="FpsCam.h" />
-    <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ModelComponent.h" />
     <ClInclude Include="MovingObjectComponent.h" />

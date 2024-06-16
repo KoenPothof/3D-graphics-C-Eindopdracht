@@ -4,7 +4,6 @@
 #include <string>
 #include "tigl.h"
 #include <glm/gtc/matrix_transform.hpp>
-#include "GameManager.h"
 
 
 class TextComponent : public DrawComponent
@@ -25,5 +24,6 @@ public:
 	void init();
 	virtual void draw() override;
 	void update(float deltaTime);
+	void setText(std::string text);
 };
 

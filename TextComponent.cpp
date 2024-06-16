@@ -1,5 +1,4 @@
 #include "TextComponent.h"
-#include "GameManager.h"
 #include "GameObject.h"
 
 
@@ -84,5 +83,10 @@ void TextComponent::draw()
     tigl::shader->enableLighting(true);
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_BLEND);
+}
+
+void TextComponent::setText(std::string texter)
+{
+	this->text = texter;
 }
 

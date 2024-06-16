@@ -1,17 +1,21 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <string>
+#include <iostream>
+#include <fstream>
 #include "FpsCam.h"
 #include "tigl.h"
 #include "ObjModel.h"
 #include "Texture.h"
-#include "GameManager.h"
 #include "DrawComponent.h"
-#include "TextComponent.h"
+#include "DoubleTextComponent.h"
 #include "RectangleComponent.h"
 #include "ModelComponent.h"
 #include "MovingObjectComponent.h"
 #include "GameObject.h"
+
+
 using tigl::Vertex;
 
 #pragma comment(lib, "glfw3.lib")
@@ -26,10 +30,12 @@ Texture* textureCeiling;
 
 std::shared_ptr<GameManager> gameManager;
 std::shared_ptr<GameObject> car;
-
+std::shared_ptr<GameObject> textObject;
 
 GLFWwindow* window;
-FpsCam* camera;
+std::unique_ptr<FpsCam> camera;
+
+std::ofstream logFile;
 
 int frontWallsWidth, sideWallsWidth = 10;
 
@@ -38,7 +44,11 @@ int x = 0;
 int y = -2;
 int z = 0;
 float deltaTime = 0.0f; 
+int pausedAt = 0;
+int pausedAtLast = 0;
 bool runningPaused = false;
+
+std::string displayText = "Running";
 
 void init();
 void update();
@@ -91,18 +101,46 @@ void init()
         if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
         {
             car->getComponent<MovingObjectComponent>()->movementToggle();
+
+            if (runningPaused)
+            {
+				runningPaused = false;
+				displayText = "Running";
+                std::cout << "Running" << std::endl;
+			}
+            else
+            {
+				runningPaused = true;
+				displayText = "Paused";
+                std::cout << "Paused" << std::endl;
+                pausedAt = glfwGetTime();
+                try{
+                logFile.open("assets/files/log.txt");
+                logFile.clear();
+                if (logFile.is_open()) {
+                    logFile << pausedAt << std::endl; 
+                    logFile.close();        
+                    std::cout <<"Het bestand is succesvol geschreven."<< std::endl;}
+                else {
+                    std::cout << "Het bestand kon niet worden geopend." << std::endl;
+                }
+				}
+                catch (const std::exception& e) {
+					std::cerr << "Exception: " << e.what() << std::endl;
+				}
+			}
         }
            
     });
 
-    camera = new FpsCam(window);
+    camera = std::make_unique<FpsCam>(window);
     textureFloor = new Texture("assets/floorTexture.png", 128, 128, NULL);
     textureWall = new Texture("assets/wallTexture.png", 128, 128, NULL);
     textureCeiling = new Texture("assets/ceilingTexture.png", 128, 128, NULL);
-
-    initObjects();
-    initLight();
     
+    draw();
+    initLight();
+    initObjects();
 }
 
 
@@ -113,13 +151,35 @@ void update()
     static double lastTime = currentTime;
     deltaTime = float(currentTime - lastTime);
     lastTime = currentTime;
-    gameManager->update(deltaTime);
 
     glEnable(GL_DEPTH_TEST);
 
+    try {
+        std::ifstream logFile("assets/files/log.txt");
+        if (logFile.is_open())
+        {
+            std::string line;
+            while (std::getline(logFile, line))
+            {
+                pausedAtLast = std::stof(line);
+            }
+            logFile.close();
+        }
+        else
+        {
+            throw std::runtime_error("Het bestand kon niet worden geopend.");
+        }
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
+
+   textObject->getComponent<DoubleTextComponent>()->text1->text = displayText;
+   textObject->getComponent<DoubleTextComponent>()->text2->text = std::to_string(currentTime);
+   textObject->getComponent<DoubleTextComponent>()->text3->text = "Last paused at rounded: " + std::to_string(pausedAtLast);
+
     for (auto& go : gameObjects)
 		go->update(deltaTime);
-  
 }
 
 void draw()
@@ -137,6 +197,8 @@ void draw()
 
     tigl::shader->enableColor(true);
     tigl::shader->enableTexture(true);
+    tigl::shader->enableLighting(true);
+
 
     glEnable(GL_DEPTH_TEST);
 
@@ -151,7 +213,7 @@ void draw()
 void initObjects() {
     auto tafel = std::make_shared<GameObject>();
     tafel->position = glm::vec3(3, y, -15);
-    tafel->addComponent(std::make_shared<ModelComponent>("assets/models/pikniekTafel/picnicTafel.obj"));
+    tafel->addComponent(std::make_shared<ModelComponent>("assets/models/picnicTafel/picnicTafel.obj"));
     tafel->scale = glm::vec3(1.5, 1.5, 1.5);
     gameObjects.push_back(tafel);
 
@@ -161,6 +223,13 @@ void initObjects() {
     car->getComponent<MovingObjectComponent>()->init();
     car->scale = glm::vec3(0.01f, 0.01f, 0.01f);
     gameObjects.push_back(car);
+
+    textObject = std::make_shared<GameObject>(gameManager);
+    textObject->addComponent(std::make_shared<DoubleTextComponent>(600, 50, 600, 100, 600, 150));
+    textObject->getComponent<DoubleTextComponent>()->text1->text = "Running";
+    textObject->getComponent<DoubleTextComponent>()->text2->text = "0.00";
+    textObject->getComponent<DoubleTextComponent>()->text3->text = "Last paused at:" + pausedAt;
+    gameObjects.push_back(textObject);
 }
 
 void drawRoom() {
@@ -196,7 +265,8 @@ void drawRoom() {
     auto ceiling1 = std::make_shared<GameObject>();
     ceiling1->addComponent(std::make_shared<RectangleComponent>(0, height, 0, 1, true, -20, -20, textureCeiling));
     ceiling1->position = glm::vec3(x, y, z);
-    gameObjects.push_back(ceiling1);
+    gameObjects.push_back(ceiling1);  
+
 }
 
 void initLight() {

@@ -3,10 +3,15 @@
 #include <memory>
 #include <list>
 #include <glm/glm.hpp>
+#include <iostream>
+#include <string>
+
+
 
 class GameManager;
 class Component;
 class DrawComponent;
+
 
 class GameObject
 {
@@ -36,10 +41,12 @@ public:
 		for (auto component : components)
 		{
 			std::shared_ptr<T> casted = std::dynamic_pointer_cast<T>(component);
-			if (casted)
+			if (casted) {
 				return casted;
+			}
 		}
 		return nullptr;
+		
 	}
 
 	template<class T>
